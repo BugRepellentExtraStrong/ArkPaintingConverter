@@ -46,20 +46,22 @@ MainWindow::MainWindow(QWidget *parent) :
     mDrawingArea1(new DrawingArea),
     mDrawingArea2(new DrawingArea),
     mProgressBar(new QProgressBar),
-    mIniFileName("painting.ini")
+    mIniFileName("painting.ini"),
+    mIniFilePath("../resources/config/")
 {
     ui->setupUi(this);
 
     ui->scrollArea->setWidget(mColorChooser);
     ui->scrollArea_img1->setWidget(mDrawingArea1);
     ui->scrollArea_img2->setWidget(mDrawingArea2);
-
-    ifstream in(mIniFileName);
+    
+	
+    ifstream in(mIniFilePath + mIniFileName);
     if(!in)
     {
         ostringstream os;
         os << "error: couldn't open "<< mIniFileName << " in directory ";
-        os << QDir::currentPath().toStdString() << endl;
+        os << QDir::currentPath().toStdString() + mIniFilePath << endl;
         os << "thrown in File: ";
         os << __FILE__ << " on line: " << __LINE__;
         throw logic_error(os.str());
