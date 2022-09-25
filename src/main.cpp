@@ -18,6 +18,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include <cstdlib>
 #include <QApplication>
 #include "mainwindow.h"
 
@@ -33,6 +34,6 @@ int main(int argc, char *argv[])
     } catch (exception & e) {
         cerr << e.what() << endl;
     }
-
+    return EXIT_SUCCESS;
 }
 
