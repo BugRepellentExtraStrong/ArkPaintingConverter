@@ -214,6 +214,8 @@ void MainWindow::SaveAsPng()
 
 void MainWindow::WriteFile()
 {
+	if(mMatrix.Cols() == 0 || mMatrix.Rows() == 0) return;
+
     QString saveFileName = QFileDialog::getSaveFileName(this, "Save File", "", "Images (*.pnt)");
     if(saveFileName.isEmpty()) return;
     QFileInfo info(saveFileName);
