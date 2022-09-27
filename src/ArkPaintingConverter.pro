@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-CONFIG += c++17 debug
+CONFIG += c++17 debug console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ArkPaintingConverter

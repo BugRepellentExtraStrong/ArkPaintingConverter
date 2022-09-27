@@ -69,6 +69,7 @@ private slots:
 private:
 
     static constexpr size_t HEADER_SIZE = 20;
+    static constexpr size_t HEADER_PIXEL_PER_UNIT = 256; //
 
     Ui::MainWindow *ui;
     QUrl mUrl;

@@ -28,6 +28,7 @@
 #include <QStringList>
 #include <QVector3D>
 #include <QProgressBar>
+#include <QMessageBox>
 
 #include "ditherbase.h"
 #include "floyd_steinberg.h"
@@ -234,8 +235,8 @@ void MainWindow::WriteFile()
 
     char header[HEADER_SIZE];
     memset(header,0,HEADER_SIZE);
-    header[5] = area_width/256;
-    header[9] = area_height/256;
+    header[5] = area_width/HEADER_PIXEL_PER_UNIT;
+    header[9] = area_height/HEADER_PIXEL_PER_UNIT;
     header[18] =  header[5]*header[9];
 
     size_t canvas_width = (mMatrix.Cols()-1)/area_width;
@@ -314,8 +315,8 @@ void MainWindow::ConvertPntToPng()
         }
         in.close();
 
-        int const x = vec[5];
-        int const y = vec[9];
+        int const x = vec[5] * HEADER_PIXEL_PER_UNIT;
+        int const y = vec[9] * HEADER_PIXEL_PER_UNIT;
 
         TColorTable table = ColorChooser::GetArkColorTable();
         vector<uchar> arr(x*y*sizeof(QRgb));
