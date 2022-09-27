@@ -9,6 +9,7 @@ cd ArkPaintingConverter
 mkdir build
 cd build
 qmake ../src
+make
 ```
 <h2>Running program</h2>
 In the build directory type:
