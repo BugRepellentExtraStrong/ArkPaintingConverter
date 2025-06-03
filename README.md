@@ -8,7 +8,7 @@ git clone https://github.com/BugRepellentExtraStrong/ArkPaintingConverter.git
 cd ArkPaintingConverter
 mkdir build
 cd build
-qmake ../src
+cmake ..
 make
 ```
 <h2>Running program</h2>
