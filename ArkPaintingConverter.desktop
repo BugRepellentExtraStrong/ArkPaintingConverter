@@ -1,0 +1,33 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=ArkPaintingConverter
+GenericName=ArkPaintingConverter
+Comment=Convert images to the Ark .pnt file format
+Keywords=qt;gui;application;
+
+# Application executable and icon
+Exec=ArkPaintingConverter
+Icon=ArkPaintingConverter
+TryExec=ArkPaintingConverter
+
+# Application behavior
+Terminal=false
+StartupNotify=true
+NoDisplay=false
+
+# Categories (determines where it appears in menus)
+Categories=Application;Office;Development;Qt;
+
+# MIME types this application can handle (optional)
+MimeType=image/png;image/jpeg;text/plain;
+
+# Localization support
+Name[de]=Meine Qt5 Anwendung
+Comment[de]=Eine beispielhafte Qt5 Desktop-Anwendung
+Name[fr]=Mon Application Qt5
+Comment[fr]=Une application de bureau Qt5 d'exemple
+Name[es]=Mi Aplicación Qt5
+Comment[es]=Una aplicación de escritorio Qt5 de ejemplo
+
+

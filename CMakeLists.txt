@@ -41,6 +41,7 @@ set(HEADERS
     src/jarvisjudiceninke.h
     src/sierra.h
     src/tpainting.h
+    src/config_path_manager.h
 )
 
 # UI files (if using Qt Designer)
@@ -119,8 +120,8 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.desktop")
 endif()
 
 # Install application icon
-if(EXISTS "${CMAKE_SOURCE_DIR}/icons/${PROJECT_NAME}.png")
-    install(FILES "icons/${PROJECT_NAME}.png"
+if(EXISTS "${CMAKE_SOURCE_DIR}/icons/${PROJECT_NAME}.xpm")
+    install(FILES "icons/${PROJECT_NAME}.xpm"
             DESTINATION share/pixmaps)
 endif()
 

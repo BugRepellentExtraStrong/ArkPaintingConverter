@@ -36,6 +36,7 @@
 #include "jarvisjudiceninke.h"
 #include "sierra.h"
 #include "tpainting.h"
+#include "config_path_manager.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -47,26 +48,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), mScale(0.25),mColorChooser(new ColorChooser),
     mDrawingArea1(new DrawingArea),
     mDrawingArea2(new DrawingArea),
-    mProgressBar(new QProgressBar),
-    mIniFileName("painting.ini"),
-    mIniFilePath("data/")
+    mProgressBar(new QProgressBar)
 {
     ui->setupUi(this);
-    
-    ;
-    setWindowIcon(QIcon("icons/ark.png"));
+
+    setWindowIcon(QIcon(ConfigPathManager::getDataFilePath("icons/ArkPaintingConverter.xpm")));
     ui->scrollArea->setMinimumWidth(230);
     ui->scrollArea->setWidget(mColorChooser);
     ui->scrollArea_img1->setWidget(mDrawingArea1);
     ui->scrollArea_img2->setWidget(mDrawingArea2);
     
-	
-    ifstream in(mIniFilePath + mIniFileName);
+    std::string configFile= ConfigPathManager::getConfigFilePath(mIniFileName.c_str()).toStdString();
+    ifstream in(configFile);
     if(!in)
     {
         ostringstream os;
         os << "error: couldn't open "<< mIniFileName << " in directory ";
-        os << QDir::currentPath().toStdString() + mIniFilePath << endl;
+        os << configFile << endl;
         os << "thrown in File: ";
         os << __FILE__ << " on line: " << __LINE__;
         throw logic_error(os.str());

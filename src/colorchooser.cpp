@@ -22,6 +22,9 @@
 #include <iostream>
 #include <math.h>
 #include <fstream>
+
+#include "config_path_manager.h"
+
 using namespace std;
 
 static const TColorTable ColorTable = {
@@ -122,8 +125,9 @@ ColorChooser::ColorChooser(QWidget *parent, const std::string & file) : QWidget(
 	
 	std::stringstream ss;
     std::string backgroundStr("background-color: #");
-	
-	ReadColorTable(file);
+	QString colorFile = ConfigPathManager::getDataFilePath(file.c_str());
+    
+	ReadColorTable(colorFile.toStdString());
 	
 	for(auto & val : mColorTable)
 	{

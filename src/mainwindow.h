@@ -85,8 +85,8 @@ private:
 
     std::vector<TPainting> mPaintings;
 
-    std::string const mIniFileName;
-    std::string const mIniFilePath;
+    const std::string mIniFileName = "data/painting.ini";
+
 };
 
 #endif // MAINWINDOW_H
