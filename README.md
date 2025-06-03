@@ -1,24 +1,4 @@
 # ArkPaintingConverter
-A program to convert image files to the pnt file format used by ARK: Survival Evolved and vice versa
-
-<h2>How to compile</h2>
-
-```
-git clone https://github.com/BugRepellentExtraStrong/ArkPaintingConverter.git
-cd ArkPaintingConverter
-mkdir build
-cd build
-cmake ..
-make
-```
-<h2>Running program</h2>
-In the build directory type:
-
-```
-./ArkPaintingConverter
-```
-=======
-# ArkPaintingConverter
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
