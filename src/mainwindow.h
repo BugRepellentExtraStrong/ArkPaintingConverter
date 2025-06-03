@@ -62,10 +62,11 @@ public slots:
 
     void TemplateChanged(int idx);
     void CheckboxClicked();
-	
-private slots:
 
-	
+
+    void ActionAboutTriggered();
+    void ReadColorTable();
+
 private:
 
     static constexpr size_t HEADER_SIZE = 20;

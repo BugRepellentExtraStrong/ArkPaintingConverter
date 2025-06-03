@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
+    <width>721</width>
     <height>438</height>
    </rect>
   </property>
@@ -34,8 +34,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>290</width>
-               <height>218</height>
+               <width>298</width>
+               <height>177</height>
               </rect>
              </property>
             </widget>
@@ -54,8 +54,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>290</width>
-               <height>218</height>
+               <width>298</width>
+               <height>177</height>
               </rect>
              </property>
             </widget>
@@ -90,7 +90,7 @@
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -174,7 +174,7 @@
           <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -318,8 +318,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>68</width>
-           <height>355</height>
+           <width>83</width>
+           <height>345</height>
           </rect>
          </property>
         </widget>
@@ -334,8 +334,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>690</width>
-     <height>22</height>
+     <width>721</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -351,9 +351,17 @@
     </property>
     <addaction name="actionConvert_Ark_pnt_to_png"/>
     <addaction name="actionSave_as_png"/>
+    <addaction name="actionRead_Color_Table"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Info</string>
+    </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTools"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -391,6 +399,16 @@
     <string>Save as png</string>
    </property>
   </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionRead_Color_Table">
+   <property name="text">
+    <string>Read Color Table</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
@@ -402,8 +420,8 @@
    <slot>OpenImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>343</y>
+     <x>327</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
      <x>337</x>
@@ -418,8 +436,8 @@
    <slot>ConvertImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>515</x>
-     <y>373</y>
+     <x>528</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>371</x>
@@ -434,8 +452,8 @@
    <slot>SelectImage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>343</y>
+     <x>237</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
      <x>277</x>
@@ -450,8 +468,8 @@
    <slot>PixelXChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>181</x>
-     <y>373</y>
+     <x>180</x>
+     <y>364</y>
     </hint>
     <hint type="destinationlabel">
      <x>86</x>
@@ -466,8 +484,8 @@
    <slot>PixelYChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>283</x>
-     <y>373</y>
+     <x>285</x>
+     <y>364</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -482,8 +500,8 @@
    <slot>WriteFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>601</x>
-     <y>373</y>
+     <x>618</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>382</x>
@@ -555,6 +573,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ActionAboutTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRead_Color_Table</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ReadColorTable()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OpenImage()</slot>
@@ -565,5 +615,7 @@
   <slot>WriteFile()</slot>
   <slot>ConvertPntToPng()</slot>
   <slot>SaveAsPng()</slot>
+  <slot>ActionAboutTriggered()</slot>
+  <slot>ReadColorTable()</slot>
  </slots>
 </ui>

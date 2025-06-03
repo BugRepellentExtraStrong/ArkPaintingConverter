@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+#Build Paths
+/build*/
+
+#Qt Project
+*.qmake.stash

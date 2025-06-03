@@ -21,6 +21,7 @@
 #include <iomanip>
 #include <iostream>
 #include <math.h>
+#include <fstream>
 using namespace std;
 
 static const TColorTable ColorTable = {
@@ -52,18 +53,43 @@ static const TColorTable ColorTable = {
 
 };
 
-TColorTable ColorChooser::GetArkColorTable()
+TColorTable ColorChooser::GetColorTable() const
 {
-    return ColorTable;
+	TColorTable table;
+	size_t i = 0;
+	for(auto val : mCheckBoxList)
+	{
+		if(val->isChecked())
+		{
+			table.push_back(mColorTable[i]);
+		}
+		i++;
+	}
+	return table;
 }
 
+TColorTable ColorChooser::GetArkColorTable()const
+{
+	TColorTable table;
+	size_t i = 0;
+	for(auto val : mCheckBoxList)
+	{
+		if(val->isChecked())
+		{
+			table.push_back(ColorTable[i]);
+		}
+		i++;
+	}
+	return table;
+	
+}
 
 void ColorChooser::CalcDist(QRgb rgb)
 {
     int rx = qRed(rgb);
     int gx = qGreen(rgb);
     int bx = qBlue(rgb);
-    for(auto val : ColorTable)
+    for(auto & val : ColorTable)
     {
 
 
@@ -81,7 +107,7 @@ void ColorChooser::CalcDist(QRgb rgb)
     }
 }
 
-ColorChooser::ColorChooser(QWidget *parent) : QWidget(parent)
+ColorChooser::ColorChooser(QWidget *parent, const std::string & file) : QWidget(parent)
 {
     mVBox = new QVBoxLayout();
     mBtnSelectAll = new QPushButton("SelectAll");
@@ -90,23 +116,27 @@ ColorChooser::ColorChooser(QWidget *parent) : QWidget(parent)
 	connect(mBtnDeselectAll, SIGNAL(clicked()), this, SLOT(DeselectAll()));
 	connect(mBtnSelectAll, SIGNAL(clicked()), this, SLOT(SelectAll()));
 	
+    
+    
     QCheckBox * p;
 	
 	std::stringstream ss;
     std::string backgroundStr("background-color: #");
 	
+	ReadColorTable(file);
 	
-	for(auto val : ColorTable)
+	for(auto & val : mColorTable)
 	{
 		ss << backgroundStr << std::hex << val.argb << endl;
         p = new QCheckBox(val.name.c_str());
         p->setMinimumWidth(100);
 		mCheckBoxList.push_back(p);
         p->setChecked(true);
-
+        
         QHBoxLayout * l = new QHBoxLayout();
         l->addWidget(p);
         QWidget * wid = new QWidget;
+        //wid->setMaximumWidth(30);
         wid->setStyleSheet(ss.str().c_str());
         l->addWidget(wid);
         mVBox->addLayout(l);
@@ -131,21 +161,7 @@ ColorChooser::~ColorChooser()
     }
 }
 
-TColorTable ColorChooser::GetColorTable()const
-{
-	TColorTable table;
-	size_t i = 0;
-	for(auto val : mCheckBoxList)
-	{
-		if(val->isChecked())
-		{
-			table.push_back(ColorTable[i]);
-		}
-		i++;
-	}
-	return table;
-	
-}
+
 
 void ColorChooser::SelectAll()
 {
@@ -162,4 +178,40 @@ void ColorChooser::DeselectAll()
 		val->setChecked(false);
 	}	
 }
-	
+
+// Method to read color table from a CSV file
+bool ColorChooser::ReadColorTable(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        return false; // File could not be opened
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string name, argbString;
+        char id, delimiter;
+        QRgb argb;
+
+        if (!(std::getline(ss, name, ',') && std::getline(ss, argbString, ',') && ss >> id)) {
+            // Handle parsing error
+            continue;
+        }
+
+        // Convert argbString to QRgb
+        std::stringstream argbStream(argbString);
+        unsigned int argbValue;
+        argbStream >> std::hex >> argbValue;
+        argb = static_cast<QRgb>(argbValue);
+
+        TColorEntry colorEntry = {name, argb, id};
+        // Add colorEntry to the ColorChooser's color table
+        // e.g., this->colorTable.push_back(colorEntry);
+        mColorTable.push_back(colorEntry);
+    }
+
+    file.close();
+    return true;
+}
+
+

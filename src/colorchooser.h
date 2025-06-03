@@ -43,10 +43,11 @@ class ColorChooser : public QWidget
 public:
     static constexpr int COLOR_EMPTY = 0;
 
-    explicit ColorChooser(QWidget * parent = nullptr);
+    explicit ColorChooser(QWidget * parent = nullptr, const std::string & file="data/ColorTableEvolved.csv");
     ~ColorChooser();
-	TColorTable GetColorTable()const;
-    static TColorTable GetArkColorTable();
+    bool ReadColorTable(const std::string& filename);
+    TColorTable GetColorTable()const;
+    TColorTable GetArkColorTable()const;
 
     void CalcDist(QRgb rgb);
 
@@ -57,6 +58,7 @@ public slots:
 	void DeselectAll();
 
 private:
+    TColorTable mColorTable;
     using TCheckBoxList = std::vector<QCheckBox*>;
 	TCheckBoxList mCheckBoxList;
     QVBoxLayout * mVBox;

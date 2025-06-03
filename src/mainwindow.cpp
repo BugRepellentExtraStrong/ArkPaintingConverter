@@ -29,6 +29,7 @@
 #include <QVector3D>
 #include <QProgressBar>
 #include <QMessageBox>
+#include <QIcon>
 
 #include "ditherbase.h"
 #include "floyd_steinberg.h"
@@ -48,10 +49,13 @@ MainWindow::MainWindow(QWidget *parent) :
     mDrawingArea2(new DrawingArea),
     mProgressBar(new QProgressBar),
     mIniFileName("painting.ini"),
-    mIniFilePath("../resources/config/")
+    mIniFilePath("data/")
 {
     ui->setupUi(this);
-
+    
+    ;
+    setWindowIcon(QIcon("icons/ark.png"));
+    ui->scrollArea->setMinimumWidth(230);
     ui->scrollArea->setWidget(mColorChooser);
     ui->scrollArea_img1->setWidget(mDrawingArea1);
     ui->scrollArea_img2->setWidget(mDrawingArea2);
@@ -318,7 +322,7 @@ void MainWindow::ConvertPntToPng()
         int const x = vec[5] * HEADER_PIXEL_PER_UNIT;
         int const y = vec[9] * HEADER_PIXEL_PER_UNIT;
 
-        TColorTable table = ColorChooser::GetArkColorTable();
+        TColorTable table = mColorChooser->GetColorTable();
         vector<uchar> arr(x*y*sizeof(QRgb));
         QRgb * p = reinterpret_cast<QRgb*>(&arr[0]);
         for(size_t i = HEADER_SIZE; i < vec.size(); i++)
@@ -347,3 +351,20 @@ void MainWindow::ConvertPntToPng()
 }
 
 
+void MainWindow::ActionAboutTriggered()
+{
+    QString aboutText = "Author: [Your Name]\n";
+    aboutText += "Version: 1.0.0\n";
+    aboutText += "Libraries Used: Qt 5.15.2, etc.";
+
+    QMessageBox::about(this, "About ArkPaintingConverter", aboutText);
+}
+
+void MainWindow::ReadColorTable() 
+{
+    QString str = QFileDialog::getOpenFileName(this, "Choose Color Table", "", "File (*.csv)");
+    if(str.isEmpty())return;
+	delete mColorChooser;
+    mColorChooser = new ColorChooser(this, str.toStdString());
+    ui->scrollArea->setWidget(mColorChooser);
+}

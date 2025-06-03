@@ -48,4 +48,5 @@ FORMS += \
         mainwindow.ui
 
 DISTFILES += \
+    ../resources/config/ColorTableEvolved.csv \
     ../resources/config/painting.ini
