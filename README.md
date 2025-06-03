@@ -89,7 +89,7 @@ The application handles large images by splitting them into multiple ARK paintin
 
 ## How to Use the Application
 
-![Application Interface](ark1.png)
+![Application Interface](./images/ark1.png)
 
 ### Basic Workflow
 
@@ -128,7 +128,7 @@ The application handles large images by splitting them into multiple ARK paintin
 
 ### Additional Features
 
-![Tools Menu](ark3.png)
+![Tools Menu](./images/ark3.png)
 
 **Tools Menu Options:**
 - **Convert ARK .pnt to png**: Batch convert .pnt files back to viewable PNG format
