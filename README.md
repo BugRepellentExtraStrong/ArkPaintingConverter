@@ -45,12 +45,12 @@ make -j$(nproc)
 
 **3. Run the application:**
 ```bash
-./MyQt5App
+./ArkPaintingConverter
 ```
 
 ### Alternative: One-step build and run
 ```bash
-mkdir -p build && cd build && cmake .. && make -j$(nproc) && ./MyQt5App
+mkdir -p build && cd build && cmake .. && make -j$(nproc) && ./ArkPaintingConverter
 ```
 
 ### Development Commands
@@ -94,9 +94,10 @@ ArkPaintingConverter is a Qt5-based image conversion tool for ARK: Survival Evol
 
 1. User loads an image via file dialog
 2. Selects ARK painting template from `data/painting.ini` (defines canvas dimensions and ratios)
-3. Chooses dithering algorithm and color palette from `data/ColorTableEvolved.csv`
-4. Conversion process scales image and applies dithering to match ARK's limited color palette
-5. Outputs .pnt files with proper ARK binary format including 20-byte headers
+3. Chooses dithering algorithm
+4. Choose color palette from `data/ColorTableEvolved.csv`
+5. Conversion process scales image and applies dithering to match ARK's limited color palette
+6. Outputs .pnt files with proper ARK binary format including 20-byte headers
 
 ### File Formats
 
