@@ -194,28 +194,34 @@ bool ColorChooser::ReadColorTable(const std::string& filename) {
     while (std::getline(file, line)) {
         std::stringstream ss(line);
         std::string name, argbString;
-        char id, delimiter;
+        std::string idString;
         QRgb argb;
 
-        if (!(std::getline(ss, name, ',') && std::getline(ss, argbString, ',') && ss >> id)) {
+        if (!(std::getline(ss, name, ',') && std::getline(ss, argbString, ',') && ss >> idString)) {
             // Handle parsing error
             continue;
         }
 
         // Convert argbString to QRgb
-        std::stringstream argbStream(argbString);
-        unsigned int argbValue;
-        argbStream >> std::hex >> argbValue;
+        unsigned int argbValue = std::stoul(argbString, 0, 16);
         argb = static_cast<QRgb>(argbValue);
+        unsigned int id = std::stoul(idString, 0, 16);
+        std::cout << "id:" << id << std::endl;
 
-        TColorEntry colorEntry = {name, argb, id};
+        TColorEntry colorEntry = {name, argb, static_cast<char>(id)};
         // Add colorEntry to the ColorChooser's color table
         // e.g., this->colorTable.push_back(colorEntry);
         mColorTable.push_back(colorEntry);
     }
 
     file.close();
+    PrintColorTable();
     return true;
 }
 
-
+void ColorChooser::PrintColorTable() {
+    std::cout << std::endl << "-----PrintColorTable-----" << std::endl;
+    for(auto val: mColorTable) {
+        std::cout << val.name << " "<< std::hex << val.argb << " " << static_cast<int>(val.id) << std::dec << std::endl;
+    }
+}

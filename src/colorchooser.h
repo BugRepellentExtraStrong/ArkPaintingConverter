@@ -64,6 +64,8 @@ private:
     QVBoxLayout * mVBox;
 	QPushButton * mBtnSelectAll;
 	QPushButton * mBtnDeselectAll;
+    
+    void PrintColorTable();
 };
 
 #endif // COLORCHOOSER_H
