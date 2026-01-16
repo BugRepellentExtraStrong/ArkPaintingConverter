@@ -27,7 +27,8 @@ struct TPainting
     std::string saveFileName;
     size_t width;
     size_t height;
-    float ratio;
+    float ratioX;
+    float ratioY;
 };
 
 #endif // TPAINTING_H

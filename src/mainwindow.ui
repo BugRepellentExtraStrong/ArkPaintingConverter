@@ -79,11 +79,18 @@
            <widget class="QLabel" name="label_5">
             <property name="font">
              <font>
-              <pointsize>5</pointsize>
+              <pointsize>6</pointsize>
              </font>
             </property>
             <property name="text">
              <string>ViewScale%</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="labelImageInfo">
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -104,7 +111,7 @@
            <widget class="QLabel" name="label_6">
             <property name="font">
              <font>
-              <pointsize>5</pointsize>
+              <pointsize>6</pointsize>
              </font>
             </property>
             <property name="text">

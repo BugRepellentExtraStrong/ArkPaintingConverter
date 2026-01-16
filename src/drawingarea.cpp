@@ -37,22 +37,16 @@ void DrawingArea::paintEvent(QPaintEvent * e)
     QRect sourceRec = mImage.rect();
     QRect targetRec = sourceRec;
     
-    if(isTemplate)
-    {
-
-        targetRec.setWidth(targetRec.width()*mViewScale * mPainting.ratio);
-    }
-    else{
-        targetRec.setWidth(targetRec.width()*mViewScale);
-    }
+  
+    targetRec.setWidth(targetRec.width()*mViewScale);
     targetRec.setHeight(targetRec.height()*mViewScale);
-    
+        
 	if(mImage.isNull()) return;
     QImage img = mImage.scaled(targetRec.width(),targetRec.height(),Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     painter.drawImage(0,0,img);
     if(isTemplate)
     {
-        painter.drawRect(0,0,mPainting.width*mViewScale* mPainting.ratio,mPainting.height*mViewScale);
+        painter.drawRect(0,0,mPainting.width*mViewScale* mPainting.ratioX,mPainting.height*mViewScale* mPainting.ratioY);
     }
 
 
@@ -75,12 +69,15 @@ void DrawingArea::SetScale()
 
     QRect targetRec = mImage.rect();
     int x;
-    if(isTemplate)
-        x = std::max(static_cast<size_t>(targetRec.width()*mViewScale*mPainting.ratio),static_cast<size_t>(mPainting.width*mPainting.ratio));
-    else
+    int y;
+    if(isTemplate) {
+        x = std::max(static_cast<size_t>(targetRec.width()*mViewScale*mPainting.ratioX),static_cast<size_t>(mPainting.width*mPainting.ratioX));
+        y = std::max(static_cast<size_t>(targetRec.height()*mViewScale*mPainting.ratioY),static_cast<size_t>(mPainting.height*mPainting.ratioY));
+    }
+    else {
         x = std::max(static_cast<size_t>(targetRec.width()*mViewScale),mPainting.width);
-
-    int y = std::max(static_cast<size_t>(targetRec.height()*mViewScale),mPainting.height);
+        y = std::max(static_cast<size_t>(targetRec.height()*mViewScale),mPainting.height);
+    }
     this->setFixedSize(x+10,y+10);
     this->repaint();
 }

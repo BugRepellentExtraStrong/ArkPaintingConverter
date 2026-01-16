@@ -81,7 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
         entry.saveFileName = str.section(",",1,1).toStdString();
         entry.width = str.section(",", 2,2).toInt();
         entry.height = str.section(",", 3,3).toInt();
-        entry.ratio = str.section(",",4,4).toFloat();
+        entry.ratioX = str.section(",",4,4).toFloat();
+        entry.ratioY = str.section(",",5,5).toFloat();
+        std::cout << "ratioX " << entry.ratioX << " ratioY " << entry.ratioY << std::endl;
         mPaintings.push_back(entry);
         in.getline(buff,SIZE);
     }
@@ -135,6 +137,9 @@ void MainWindow::OpenImage()
 {
     mImage.load(ui->lineEditImgPath->text());
     mDrawingArea1->SetImage(mImage);
+    stringstream ss;
+    ss << mImage.width() << "x" << mImage.height();
+    ui->labelImageInfo->setText(ss.str().c_str());
 }
 
 void MainWindow::CheckboxClicked()
@@ -167,9 +172,12 @@ void MainWindow::ConvertImage()
     int const x = ui->lineEditPixelX->text().toInt();
     int const y = ui->lineEditPixelY->text().toInt();
 
-    mDrawingArea2->SetTemplate(mPaintings[ui->comboBox->currentIndex()]);
+    
+    TPainting const painting = mPaintings[ui->comboBox->currentIndex()];
+    std::cout << "scale: " << painting.ratioX << ", " << painting.ratioY << std::endl;
+    mDrawingArea2->SetTemplate(painting);
     mDrawingArea2->SetImage(dither->ConvertImage(mImage.scaled(x,y),
-                         mColorChooser->GetColorTable(),ditherFact,mProgressBar));
+                         mColorChooser->GetColorTable(),ditherFact,mProgressBar).scaled(x*painting.ratioX,y*painting.ratioY));
 
     mMatrix = dither->GetColorIdMatrix();
 
@@ -190,7 +198,10 @@ void MainWindow::PixelXChanged()
         float ratio = static_cast<float>(mImage.width())/mImage.height();
         int x = ui->lineEditPixelX->text().toInt();
         TPainting painting = mPaintings[ui->comboBox->currentIndex()];
-        int y = x*painting.ratio/ratio;
+        float ratioP = painting.ratioX/painting.ratioY;
+        //int y = x*(painting.ratioX/painting.ratioY)/ratio;
+        //int y = x/ratio;
+        int y = x*ratioP/ratio;
         ui->lineEditPixelY->setText(QString::number(y));
     }
 }
@@ -202,7 +213,10 @@ void MainWindow::PixelYChanged()
         float ratio = static_cast<float>(mImage.width())/mImage.height();
         int y = ui->lineEditPixelY->text().toInt();
         TPainting painting = mPaintings[ui->comboBox->currentIndex()];
-        int x = y*ratio/painting.ratio;
+        float ratioP = painting.ratioX/painting.ratioY;
+        //int x = y*ratio/(painting.ratioX/painting.ratioY);
+        //int x = y*ratio;
+        int x = y*ratio/ratioP;
         ui->lineEditPixelX->setText(QString::number(x));
     }
 }
